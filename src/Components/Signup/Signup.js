@@ -98,7 +98,7 @@ export default function Signup() {
           <br />
           <button type='submit' >Signup</button>
         </form>
-        <a>Login</a>
+        <a onClick={()=>{navigate("/login")}}>Login</a>
       </div>
     </div>
   );

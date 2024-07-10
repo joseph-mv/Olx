@@ -66,7 +66,8 @@ function Login() {
           <br />
           <button>Login</button>
         </form>
-        <a>Signup</a>
+            
+        <span onClick={()=>{navigate("/signup")}}>Signup</span>
       </div>
     </div>
   );

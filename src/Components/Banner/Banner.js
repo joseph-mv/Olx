@@ -23,9 +23,10 @@ function Banner() {
         </div>
         <div className="banner">
           <img
-            src="../../../Images/banner copy.png"
+            src="../../../Images/banner copy."
             alt=""
           />
+          <img src="../../../" alt="" />
         </div>
       </div>
       
