@@ -1,35 +1,75 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, where, query } from "firebase/firestore";
 import Heart from "../../assets/Heart";
 import "./Post.css";
 import { db } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { PostContext } from "../../store/PostContext";
+import { AuthContext } from "../../store/FirebaseContext";
+import { useTranslation } from "react-i18next";
 
 
 function Posts() {
-  const [products, setProducts] = useState([]);
- 
+  const [myProducts, setMyProducts] = useState([]);
+  const [products,setProducts]=useState([]);
+  const { user } = useContext(AuthContext)
+  const { t } = useTranslation();
+  // console.log('user')
+  // console.log(user?.uid)
+
+
 useEffect(() => {
+  const fetchMyProducts = async () => {
+    try {
+      const productsCollection = collection(db, "products");
+      const q = query(productsCollection, where("userId", "==", user?.uid));
+      const querySnapshot = await getDocs(q);
+      const allProducts = querySnapshot.docs.map((product) => ({
+        ...product.data(),
+        id: product.id,
+      }));
+      setMyProducts(allProducts);
+    } catch (error) {
+      console.error("Error getting documents: ", error);
+    }
+  };
+ if(user){
+  fetchMyProducts();
+ 
+ }
   
+}, [user?.uid]);
+
+useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      console.log(user)
+      const productsCollection = collection(db, "products");
+
+      const q = user 
+      ? query(productsCollection, where("userId", "!=", user.uid)) 
+      : query(productsCollection); console.log(q)
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot)
+      const allProducts = querySnapshot.docs.map((product) => ({
+        ...product.data(),
+        id: product.id,
+      }));
+      setProducts(allProducts);
+      // console.log(allProducts)
+    } catch (error) {
+      console.error("Error getting documents: ", error);
+    }
+  };
+
+  fetchProducts();
+ 
+ 
   
-  const productsCollection = collection(db, "products");
-  getDocs(productsCollection)
-  .then((querySnapshot) => {
-    const allPost = querySnapshot.docs.map((product) => {
-      // Print the data of each document
-      // console.log(product.data());
-      return { ...product.data(), id: product.id };
-    });
-// console.log(allPost)
-    setProducts(allPost);
-    // console.log(products);
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
-}, [])
-// console.log(products)e
+}, [user]);
+
+
+
 const {setPostDetails} = useContext(PostContext)
 const navigate= useNavigate()
 
@@ -38,19 +78,17 @@ e.preventDefault();
 setPostDetails(product)
 navigate('view')
 }
-console.log(products)
+
 
  
   return (
     <div className="postParentDiv">
       <div className="moreView">
         <div className="heading">
-          <span>Quick Menu</span>
-         
-          <span>View more</span>
+          
         </div>
         <div className="cards">
-          {products.map((product) => {
+          {myProducts.map((product) => {
            return <div onClick={(e)=>{productHandler(e,product)}} className="card">
               <div className="favorite">
                 <Heart></Heart>
@@ -72,25 +110,28 @@ console.log(products)
       </div>
       <div className="recommendations">
         <div className="heading">
-          <span>Fresh recommendations</span>
+          <span>{t("FRESH_RECOMMENDATIONS")}</span>
         </div>
         <div className="cards">
-          <div className="card">
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>10/5/2021</span>
-            </div>
-          </div>
+         
+        {products.map((product) => {
+           return <div onClick={(e)=>{productHandler(e,product)}} className="card">
+              <div className="favorite">
+                <Heart></Heart>
+              </div>
+              <div className="image">
+                <img src={product.downloadURL} alt="" />
+              </div>
+              <div className="content">
+                <p className="rate">&#x20B9; {product.price}</p>
+                <span className="kilometer">{product.category}</span>
+                <p className="name">{product.name} </p>
+              </div>
+              <div className="date">
+                <span>{product.createdAt.toDate().toDateString()}</span>
+              </div>
+            </div>;
+          })}
         </div>
       </div>
     </div>

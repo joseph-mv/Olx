@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { getAuth, signOut } from "firebase/auth";
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -7,13 +7,23 @@ import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext } from '../../store/FirebaseContext';
-import { useNavigate, redirect } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { TiTick } from "react-icons/ti";
 
 function Header() {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
+  const [showLan,setShowLan]=useState(false)
 
+  const handleLanguage=()=>{
+    setShowLan(!showLan)
+  }
+  const { i18n,t } = useTranslation();
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   const handleSignout = () => {
     const auth = getAuth();
     signOut(auth).then(() => {
@@ -28,7 +38,7 @@ function Header() {
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div onClick={()=>navigate('/')} className="brandName">
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
@@ -40,17 +50,24 @@ function Header() {
           <div className="input">
             <input
               type="text"
-              placeholder="Find car,mobile phone and more..."
+              placeholder={t("FIND_CAR_MOBILE_PHONE_AND_MORE")}
             />
           </div>
           <div className="searchAction">
             <Search color="#ffffff"></Search>
           </div>
         </div>
-        <div className="language">
-          <span onClick={()=>{console.log('english')}}> ENGLISH </span>
-          <Arrow></Arrow>
+        <div onClick={handleLanguage} className="language">
+          <span > {t('LANGUAGE')} </span>
+          <div className={showLan&&'rotArrow'}><Arrow></Arrow></div>
+          
+          <div className={`languages ${showLan&&'showLanguage'} `}>
+          <span  onClick={() => changeLanguage('en')} > ENGLISH {t('LANGUAGE')==="ENGLISH"&&<TiTick className='tickIcon' />}</span>
+          <span onClick={() => changeLanguage('hi')} >
+            हिंदी {t('LANGUAGE')==="हिंदी"&&<TiTick className='tickIcon' />}</span>
+          </div>
         </div>
+    <div className='loginAndsell'>
         <div className="loginPage">
           {user ? (
             <span >
@@ -58,22 +75,23 @@ function Header() {
             </span>
           ) : (
             <span onClick={() => {
-              
-              navigate('/login')}}>Login</span>
+
+              navigate('/login')}}>{t('LOGIN')}</span>
           )}
 
           {/* <span>{user ? onclick = () => { navigate }; user.displayName:'Login'}</span> */}
           <hr />
         </div>
-        <div>{user && <span onClick={() => { handleSignout() }}>Logout</span>}</div>
+        <div>{user && <span onClick={() => { handleSignout() }}>{t('LOGOUT')}</span>}</div>
 
 
-        <div className="sellMenu">
+        <div onClick={()=>{navigate('/sell')}} className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span onClick={()=>{navigate('/sell')}}>SELL</span>
+            <span >{t('SELL')}</span>
           </div>
+        </div>
         </div>
       </div>
     </div>

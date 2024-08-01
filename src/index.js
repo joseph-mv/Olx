@@ -5,14 +5,15 @@ import App from './App';
 import { FirebaseContext } from './store/FirebaseContext';
 import{firebase} from './firebase/config'
 import  {Context } from './store/FirebaseContext';
-
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 // console.log(firebase)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <React.StrictMode>
-
+ <I18nextProvider i18n={i18n}>
     <FirebaseContext.Provider value={firebase} >
       <Context>
        
@@ -22,7 +23,7 @@ root.render(
       </Context>
      
     </FirebaseContext.Provider>
-   
+    </I18nextProvider>
   </React.StrictMode>
 );
 

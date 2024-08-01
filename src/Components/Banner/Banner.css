@@ -1,35 +1,147 @@
+.bannerContainer{
+  position: relative;
+ 
+  top: 75px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
 .bannerParentDiv {
-  padding-top: 4em;
+  
+ overflow: hidden;
+  
+  /* max-width: 99vw; */
+  height: 3em;
+  width: 101%;
+  /* width: auto; */
+  
+  background: linear-gradient(to bottom, rgb(187, 187, 187) 0%, white 10%);
+  /* border-radius: 5px; */
+   
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+  
+  
 }
-.bannerParentDiv .bannerChildDiv {
-}
+
 .bannerParentDiv .bannerChildDiv .menuBar {
   display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  justify-content: flex-end;
+ margin-right: 15vw;
+ /* margin-left: 100px; */
   padding: 10px 16px 10px 16px;
+ 
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar span {
-}
 
-.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu span {
+.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu  {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  
+  justify-content: center;
   margin-right: 16px;
   font-weight: bolder;
+  align-items: center;
+  min-width: 200px;
+ 
+}
+.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu .arrow {
+  transform: rotate(180deg);
+  
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions {
+
+
+.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions  {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  
+  
+  white-space: nowrap;
+  
 }
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions span {
-  padding: 10px;
+.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions  span{
+ max-width: 20vw;
+ text-overflow: ellipsis;
+ overflow: hidden;
+ font-family: sans-serif;
+ font-size: 0.9em;
+ 
+}
+.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions  span:hover{
+  
+  color: rgb(74, 139, 139);
 }
 
-.bannerChildDiv .banner {
-  position: relative;
-  width: 100vw;
+.subMenu{
+  
+  display: none;
+  position: absolute;
+  
+  width: 1275px;
+  background-color: white;
+  padding: 5px;
+  top: 99%;
+  border-left: 1px solid rgba(144, 137, 137, 0.13);
+  border-right: 1px solid rgba(144, 137, 137, 0.13);
+  border-bottom: 1px solid rgba(144, 137, 137, 0.13);
+ 
+  z-index: 1;
+  justify-content: center;
+ /* margin-right: 15vw; */
 }
-.bannerChildDiv .banner img{
-  width: 100vw;
+.subMenu--visible{
+ 
+  display: block;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.column {
+  /* background-color: #f4f4f4; */
+  /* border: 1px solid #ddd; */
+  padding: 20px;
+  width: auto; /* Adjust width as needed */
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 15px; 
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-size: .9em;
+}
+li:hover{
+  color: rgb(74, 139, 139);
+}
+
+li span{
+  display: block;
+  font-weight: bold;
+  margin-bottom: 40px;
+  /* background-color: red; */
+  /* padding: 20px; */
+}
 @media only screen and (max-width: 700px) {
   .otherQuickOptions {
     display: none;
@@ -37,4 +149,23 @@
   .bannerChildDiv .banner {
     position: relative;
   }
+}
+@media only screen and (max-width: 1350px){
+.bannerContainer{
+  align-items: flex-start;
+}
+
+  .bannerParentDiv{
+ /* overflow: visible; */
+ width: auto;
+ background-color: aqua;
+ margin-left: -10px;
+ 
+  }
+  .subMenu{
+    margin-left: 15px;
+    /* margin-right:20px; */
+  }
+
+ 
 }

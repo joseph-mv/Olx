@@ -1,5 +1,8 @@
 .footerParentDiv {
+  max-width: 100%;
   width: 100vw;
+  position: relative;
+  top: 70px;
 }
 .footerParentDiv .content {
   display: flex;

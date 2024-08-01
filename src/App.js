@@ -13,12 +13,12 @@ import { Post } from './store/PostContext';
 
 function App() {
   const { setUser } = useContext(AuthContext);
-
+ console.log('app')
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        
         setUser(user);
       } else {
         // User is signed out
@@ -28,9 +28,11 @@ function App() {
 
   return (
     <div>
+      
       <Post>
         <Router>
           <Routes>
+            
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />

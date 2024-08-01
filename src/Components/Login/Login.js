@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("josephmv43@gmail.com");
-  const [password, setPassword] = useState("12345678");
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]=useState("");
 
 
   /*  */
@@ -19,15 +19,12 @@ function Login() {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        // ...
+        
         navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        alert(errorMessage);
+        setError('invalid email or password');
       });
   };
   return (
@@ -64,6 +61,7 @@ function Login() {
           />
           <br />
           <br />
+          <p>{error&&error}</p>
           <button>Login</button>
         </form>
             

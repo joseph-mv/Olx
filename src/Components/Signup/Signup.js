@@ -13,13 +13,13 @@ export default function Signup() {
   const[password,setPassword]=useState()
   const[phone,setPhone]=useState()
   const navigate = useNavigate();
-  console.log(email)
+  const [error, setError]=useState("");
 
   const firebase= useContext(FirebaseContext)
   
   const handleSubmit=(e)=>{
     e.preventDefault()
-    console.log(e)
+    // console.log(e)
     
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -28,7 +28,7 @@ export default function Signup() {
     return updateProfile(user, {
       displayName: userName
     }).then(()=>{
-      console.log(user)
+      // console.log(user)
       addDoc(collection(db, "Users"), {
         id:user.uid,
         userName:userName,
@@ -37,8 +37,15 @@ export default function Signup() {
       }).then(() => {
         navigate("/login");
      });
+    }).catch((error)=>{
+      
+      console.log(error)
     })
   
+  }).catch((error)=>{
+     setError("Invalid email or email already in use. Please enter a different email address.")
+    // console.log("Failed to")
+    // console.log(error.firebaseError)
   })
 
   }  
@@ -57,6 +64,7 @@ export default function Signup() {
             // defaultValue="John"
             value={userName}
             onChange={(e)=>{setUserName(e.target.value)}}
+            required
           />
           <br />
           <label htmlFor="email">Email</label>
@@ -69,6 +77,7 @@ export default function Signup() {
             // defaultValue="John"
             value={email}
             onChange={(e)=>{setEmail(e.target.value)}}
+            required
           />
           <br />
           <label htmlFor="phone">Phone</label>
@@ -81,6 +90,7 @@ export default function Signup() {
             // defaultValue="Doe"
             value={phone}
             onChange={(e)=>{setPhone(e.target.value)}}
+            required
           />
           <br />
           <label htmlFor="password">Password</label>
@@ -93,9 +103,12 @@ export default function Signup() {
             // defaultValue="Doe"
             value={password}
             onChange={(e)=>{setPassword(e.target.value)}}
+            required
+            minLength={6}
           />
           <br />
           <br />
+          {error ? <p className='error'>{error}</p>:""}  {/* Display error message if exists */}
           <button type='submit' >Signup</button>
         </form>
         <a onClick={()=>{navigate("/login")}}>Login</a>

@@ -1,8 +1,11 @@
 .headerParentDiv {
+
+  /* margin-left: 0 auto; */
   padding: 10px;
   background-color: whitesmoke;
   position: fixed;
-  width: 100vw;
+
+  width: 100%;
   z-index: 999;
 }
 
@@ -11,10 +14,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1em;
+}
+
+.brandName {
+  cursor: pointer;
 }
 
 .placeSearch {
-  width: 16em;
+  /* width: 16em; */
   height: 48px;
   display: flex;
   align-items: center;
@@ -35,14 +43,16 @@
 }
 
 .productSearch {
-  width: 35em;
+  /* margin-left: 10px; */
+  width: 50em;
+  flex-shrink: 1;
   height: 48px;
   border: 2px solid #002f34;
   border-radius: 4px;
   display: flex;
   align-items: center;
   background-color: white;
-  display: flex;
+
   align-items: center;
   justify-content: space-between;
 }
@@ -82,6 +92,10 @@
   height: 48px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  /* background-color: red; */
 }
 
 .language span {
@@ -93,8 +107,54 @@
   font-weight: bolder;
   margin-right: 5px;
 }
+.language .rotArrow{
+  transform: rotate(180deg);
+  
+}
 
-.language svg {
+.languages::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 5px);
+  /* left: 50%; */
+  /* background-color: red; */
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+}
+
+.languages {
+  visibility: hidden;
+  position: absolute;
+  top: 130%;
+  width: 13vw;
+  padding: 30px;
+  background-color: white;
+display: flex;
+flex-direction: column;
+
+gap: 30px;
+  box-shadow:
+    5px 5px 10px rgba(0, 0, 0, 0.5),
+    /* Bottom-right shadow */
+    -5px 5px 10px rgba(0, 0, 0, 0.5);
+
+  border-radius: 1px;
+  text-align: start;
+
+
+}
+
+.languages span{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  
+}
+.showLanguage{
+  visibility: visible;
 }
 
 .span {
@@ -106,19 +166,31 @@
   margin-right: 5px;
 }
 
+.loginAndsell {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.loginPage {
+  cursor: pointer;
+}
+
 .loginPage hr {
   margin: 0;
   background-color: black;
   height: 2px;
 }
 
-.loginPage a{
+.loginPage a {
   text-decoration: none;
 }
 
 .sellMenu {
   position: relative;
   cursor: pointer;
+  margin-right: 15px;
 }
 
 .sellMenu .all {
@@ -136,6 +208,7 @@
 .sellMenu .right {
   fill: #3a77ff;
 }
+
 .sellMenu .sellMenuContent {
   display: flex;
   position: absolute;
@@ -155,10 +228,12 @@
   margin-left: 5px;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 580px) {
+
   .placeSearch,
   .productSearch,
-  .sellMenu {
+  .language {
     display: none;
   }
+
 }

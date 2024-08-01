@@ -1,4 +1,11 @@
+.postParentDiv{
+  position: relative;
+  top: 70px;
+  max-width: 1275;
+ 
+}
 .moreView {
+  min-height: 270px;
   margin: 16px 16px 24px;
   padding: 16px 16px 32px;
   background-color: #ebeeef;
