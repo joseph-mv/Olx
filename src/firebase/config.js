@@ -2,13 +2,15 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+// require('dotenv').config();
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBhTqsHcScwqGhkUkOOXbMXDHk3gMkNh_I",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "fir-60a08.firebaseapp.com",
   databaseURL: "https://fir-60a08-default-rtdb.firebaseio.com",
   projectId: "fir-60a08",

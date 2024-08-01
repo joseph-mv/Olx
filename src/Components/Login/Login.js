@@ -23,14 +23,14 @@ function Login() {
         navigate("/");
       })
       .catch((error) => {
-        const errorMessage = error.message;
+       
         setError('invalid email or password');
       });
   };
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt="logo"></img>
         <form onSubmit={handleLogin}>
           <label htmlFor="fname">Email</label>
           <br />

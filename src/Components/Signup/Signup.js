@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import Logo from '../../olx-logo.png';
 import './Signup.css';
-import { FirebaseContext } from '../../store/FirebaseContext';
+// import { FirebaseContext } from '../../store/FirebaseContext';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from '../../firebase/config';
 import { collection, addDoc } from "firebase/firestore"; 
@@ -15,7 +15,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const [error, setError]=useState("");
 
-  const firebase= useContext(FirebaseContext)
+  // const firebase= useContext(FirebaseContext)
   
   const handleSubmit=(e)=>{
     e.preventDefault()
@@ -52,7 +52,7 @@ export default function Signup() {
   return (
     <div>
       <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt='logo'></img>
         <form  onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
@@ -111,7 +111,7 @@ export default function Signup() {
           {error ? <p className='error'>{error}</p>:""}  {/* Display error message if exists */}
           <button type='submit' >Signup</button>
         </form>
-        <a onClick={()=>{navigate("/login")}}>Login</a>
+        <span onClick={()=>{navigate("/login")}}>Login</span>
       </div>
     </div>
   );

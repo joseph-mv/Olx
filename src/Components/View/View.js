@@ -40,7 +40,13 @@ useEffect(() => {
   fetchUserData(db, postDetails);
 
  
-}, []); // Dependency array
+}, []); 
+useEffect(() => {
+  
+
+
+}, [])
+
 
   console.log(userDetails)
 

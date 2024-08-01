@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getFirestore, collection, getDocs, where, query } from "firebase/firestore";
+import {  collection, getDocs, where, query } from "firebase/firestore";
 import Heart from "../../assets/Heart";
 import "./Post.css";
 import { db } from "../../firebase/config";
@@ -38,7 +38,7 @@ useEffect(() => {
  
  }
   
-}, [user?.uid]);
+}, [user]);
 
 useEffect(() => {
   const fetchProducts = async () => {
