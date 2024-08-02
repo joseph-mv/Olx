@@ -34,6 +34,7 @@ export default function Signup() {
         userName:userName,
         email:email,
         phone:phone,
+        favourite:{},
       }).then(() => {
         navigate("/login");
      });
