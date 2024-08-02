@@ -15,8 +15,6 @@ export default function Signup() {
   const navigate = useNavigate();
   const [error, setError]=useState("");
 
-  // const firebase= useContext(FirebaseContext)
-  
   const handleSubmit=(e)=>{
     e.preventDefault()
     // console.log(e)
