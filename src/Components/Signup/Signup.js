@@ -43,8 +43,7 @@ export default function Signup() {
   
   }).catch((error)=>{
      setError("Invalid email or email already in use. Please enter a different email address.")
-    // console.log("Failed to")
-    // console.log(error.firebaseError)
+    
   })
 
   }  
