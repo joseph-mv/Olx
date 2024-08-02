@@ -1,8 +1,8 @@
 {
-  "name": "Olx-clone",
+  "name": "olx-clone",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://joseph-mv.github.io/Olx-Clone",
+  
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -24,9 +24,8 @@
     "start": " react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build "
+    "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [
