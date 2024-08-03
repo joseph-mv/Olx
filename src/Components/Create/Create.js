@@ -91,7 +91,7 @@ const Create = () => {
               type="text"
               id="fname"
               name="Name"
-              defaultValue="John"
+              defaultValue=""
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -104,7 +104,7 @@ const Create = () => {
               type="text"
               id="fname"
               name="category"
-              defaultValue="John"
+              defaultValue=""
               onChange={(e) => setCategory(e.target.value)}
             />
             <br />
