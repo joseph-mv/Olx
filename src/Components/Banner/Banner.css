@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  align-items: center;
+  align-items: ce
 }
 .bannerParentDiv {
   
@@ -13,8 +13,8 @@
   
   /* max-width: 99vw; */
   height: 3em;
-  width: 101%;
-  /* width: auto; */
+  width: 105%;
+
   
   background: linear-gradient(to bottom, rgb(187, 187, 187) 0%, white 10%);
   /* border-radius: 5px; */
@@ -32,6 +32,7 @@
  margin-right: 15vw;
  /* margin-left: 100px; */
   padding: 10px 16px 10px 16px;
+  
  
 }
 
@@ -40,7 +41,7 @@
   display: flex;
   flex-direction: row;
   gap: 5px;
-  
+ 
   justify-content: center;
   margin-right: 16px;
   font-weight: bolder;
@@ -69,7 +70,7 @@
   
 }
 .bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions  span{
- max-width: 20vw;
+ max-width: 15vw;
  text-overflow: ellipsis;
  overflow: hidden;
  font-family: sans-serif;
@@ -149,6 +150,10 @@ li span{
   .bannerChildDiv .banner {
     position: relative;
   }
+  .subMenu{
+    display: none;
+  }
+  
 }
 @media only screen and (max-width: 1350px){
 .bannerContainer{
@@ -157,14 +162,15 @@ li span{
 
   .bannerParentDiv{
  /* overflow: visible; */
- width: auto;
- background-color: aqua;
+ /* width: 130vw; */
+
  margin-left: -10px;
  
   }
-  .subMenu{
-    margin-left: 15px;
-    /* margin-right:20px; */
+  .bannerParentDiv .bannerChildDiv .menuBar{
+  
+    justify-content: flex-start;
+    /* overflow: hidden; */
   }
 
  

@@ -1,14 +1,15 @@
 .postContainer{
   display: flex;
   justify-content: center;
+  width: auto;
+  /* box-sizing: border-box; */
+  /* width: 1275px; */
+  /* background-color: red; */
 }
 .postParentDiv{
   position: relative;
   top: 70px;
-  max-width: 1275px;
- width: 95%;
-
- 
+  width: 1275px;
 }
 .moreView {
   
@@ -35,9 +36,7 @@
   color: #002f34;
 }
 
-.recommendations .cards {
-  display: flex;
-}
+
 
 .moreView .cards {
   white-space: nowrap;
@@ -46,6 +45,7 @@
 }
 
 .card {
+  position: relative;
   margin-right: 15px;
   padding: 13px;
   max-width: 222px;
@@ -97,14 +97,29 @@
 
 .recommendations {
   margin: 16px 16px 24px;
+  width: auto;
 }
 .recommendations .cards{
   display: flex;
   flex-direction: row;
- flex-wrap: wrap;
+  justify-content: center;
+ flex-wrap:wrap;
+ gap: 10px;
 }
+
 
 .recommendations .heading span {
   font-size: 24px;
   color: #002f34;
+}
+@media only screen and (max-width: 700px){
+  .card{
+    width: 100px;
+    height: 200px;
+  }
+  .card .image img{
+    height: 50px;
+    width: auto;
+  }
+ 
 }
