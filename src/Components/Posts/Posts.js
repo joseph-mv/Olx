@@ -7,16 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { PostContext } from "../../store/PostContext";
 import { AuthContext } from "../../store/FirebaseContext";
 import { useTranslation } from "react-i18next";
-
+import {SearchProductListContext} from '../../store/SearchProductListContext'
 function Posts() {
   const [myProducts, setMyProducts] = useState([]);
-  const [products, setProducts] = useState([]);
   const { user } = useContext(AuthContext);
+  const {searchProductList}=useContext(SearchProductListContext)
   const { t } = useTranslation();
   const { setPostDetails } = useContext(PostContext);
   const [likedPosts, setLikedPosts] = useState({});
   const navigate = useNavigate();
-
+ console.log('sea',searchProductList)
   useEffect(() => {
     const fetchMyProducts = async () => {
       try {
@@ -37,26 +37,6 @@ function Posts() {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productsCollection = collection(db, "products");
-        const q = user
-          ? query(productsCollection, where("userId", "!=", user.uid))
-          : query(productsCollection);
-        const querySnapshot = await getDocs(q);
-        const allProducts = querySnapshot.docs.map((product) => ({
-          ...product.data(),
-          id: product.id,
-        }));
-        setProducts(allProducts);
-      } catch (error) {
-        console.error("Error getting documents: ", error);
-      }
-    };
-
-    fetchProducts();
-  }, [user]);
 
   const productHandler = (e, product) => {
     e.preventDefault();
@@ -66,7 +46,10 @@ function Posts() {
   const modifyFavourite = async (id) => {
     
     try {
-      console.log("Modifying")
+      if(id&&!user){
+        navigate('/login')
+      }
+      // console.log("Modifying")
       const usersCollection = collection(db, "Users");
 
       const q = query(usersCollection, where("id", "==", user.uid));
@@ -79,22 +62,22 @@ function Posts() {
         const userData = docs.data();
 
         const updatedFavourite = userData.favourite
-         console.log(updatedFavourite)
+        //  console.log(updatedFavourite)
         if (updatedFavourite[id]) {
           delete updatedFavourite[id];
         } else {
           updatedFavourite[id] = true;
         }
-        console.log(updatedFavourite)
+        // console.log(updatedFavourite)
         setLikedPosts(updatedFavourite)
         // console.log(userData)
         await updateDoc(userDocRef, { favourite: updatedFavourite })
-        console.log(likedPosts)
+        // console.log(likedPosts)
         // console.log(updatedFavourite)
       });
 
     } catch (erorr) {
-      console.log(erorr);
+      console.error(erorr);
     }
   }
   const handleFavourite = (e, id) => {
@@ -104,8 +87,44 @@ function Posts() {
 
   };
   useEffect(() => {
+    const modifyFavourite = async (id) => {
     
-    modifyFavourite(false)
+      try {
+        if(id&&!user){
+          navigate('/login')
+        }
+        // console.log("Modifying")
+        const usersCollection = collection(db, "Users");
+  
+        const q = query(usersCollection, where("id", "==", user.uid));
+  
+        const querySnapshot = await getDocs(q);
+  
+        querySnapshot.forEach(async (docs) => {
+          const userDocRef = doc(db, "Users", docs.id);
+  
+          const userData = docs.data();
+  
+          const updatedFavourite = userData.favourite
+          //  console.log(updatedFavourite)
+          if (updatedFavourite[id]) {
+            delete updatedFavourite[id];
+          } else {
+            updatedFavourite[id] = true;
+          }
+          // console.log(updatedFavourite)
+          setLikedPosts(updatedFavourite)
+          // console.log(userData)
+          await updateDoc(userDocRef, { favourite: updatedFavourite })
+          // console.log(likedPosts)
+          // console.log(updatedFavourite)
+        });
+  
+      } catch (erorr) {
+        console.error(erorr);
+      }
+    }
+    modifyFavourite()
   }, [user])
 
 
@@ -147,7 +166,7 @@ function Posts() {
             <span>{t("FRESH_RECOMMENDATIONS")}</span>
           </div>
           <div className="cards">
-            {products.map((product) => (
+            {searchProductList?.map((product) => (
               <div
                 key={product.id}
                 onClick={(e) => productHandler(e, product)}

@@ -10,10 +10,11 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./store/FirebaseContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Post } from './store/PostContext';
+import {Search} from './store/SearchProductListContext'
 
 function App() {
   const { setUser } = useContext(AuthContext);
- console.log('app')
+//  console.log('app')
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -30,6 +31,7 @@ function App() {
     <div>
       
       <Post>
+        <Search >
         <Router>
           <Routes>
             
@@ -40,6 +42,7 @@ function App() {
             <Route path="/view" element={<ViewPost />} />
           </Routes>
         </Router>
+        </Search>
       </Post>
     </div>
   );

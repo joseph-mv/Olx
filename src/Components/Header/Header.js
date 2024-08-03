@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getAuth, signOut } from "firebase/auth";
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -10,11 +10,49 @@ import { AuthContext } from '../../store/FirebaseContext';
 import { useNavigate} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TiTick } from "react-icons/ti";
+import { SearchProductListContext } from '../../store/SearchProductListContext';
+import {  collection, getDocs,  query } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 function Header() {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
+  const {setSearchProductList}=useContext(SearchProductListContext)
+  const [products, setProducts] = useState([]);
   const [showLan,setShowLan]=useState(false)
+  
+  console.log('head')
+  useEffect(() => {
+    
+    const fetchProducts = async () => {
+      const q = query(collection(db, 'products'));
+      const querySnapshot = await getDocs(q);
+      const productsList =querySnapshot.docs.map(doc => doc.data());
+      setProducts(productsList)
+      const filteredProducts = productsList.filter(product=>product.userId!==user?.uid)
+      setSearchProductList(filteredProducts)
+      // console.log('filter',filteredProducts)
+    };
+
+    fetchProducts();
+  }, [user]);
+
+  const handleSearch=(e)=>{
+    // console.log(e.target.value)
+    // setSearchTerm(e.target.value)
+    let searchTerm=e.target.value
+    const filteredProducts=products.filter(product=> product.userId!==user?.uid&&
+      (product.name.toLowerCase().includes(searchTerm.toLowerCase())||
+      product.category.toLowerCase().includes(searchTerm.toLowerCase())))
+    
+  //  console.log('search',filteredProducts)
+     
+   setSearchProductList(filteredProducts)
+  }
+  // console.log(user?.uid)
+ 
+  
+
 
   const handleLanguage=()=>{
     setShowLan(!showLan)
@@ -33,6 +71,7 @@ function Header() {
 
     })
   }
+  
 
 
   return (
@@ -49,6 +88,7 @@ function Header() {
         <div className="productSearch">
           <div className="input">
             <input
+            onChange={handleSearch}
               type="text"
               placeholder={t("FIND_CAR_MOBILE_PHONE_AND_MORE")}
             />
