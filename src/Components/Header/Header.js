@@ -26,12 +26,16 @@ function Header() {
     
     const fetchProducts = async () => {
       const q = query(collection(db, 'products'));
+      
       const querySnapshot = await getDocs(q);
-      const productsList =querySnapshot.docs.map(doc => doc.data());
+      console.log((querySnapshot))
+      const productsList =querySnapshot.docs.map(doc => {
+        return {...doc.data(), id: doc.id };
+      });
       setProducts(productsList)
       const filteredProducts = productsList.filter(product=>product.userId!==user?.uid)
       setSearchProductList(filteredProducts)
-      // console.log('filter',filteredProducts)
+      console.log('filter',filteredProducts)
     };
 
     fetchProducts();

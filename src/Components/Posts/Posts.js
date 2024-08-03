@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { doc, collection, getDocs, where, query, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getDocs,
+  where,
+  query,
+  updateDoc,
+} from "firebase/firestore";
 import Heart from "../../assets/Heart";
 import "./Post.css";
 import { db } from "../../firebase/config";
@@ -7,16 +14,16 @@ import { useNavigate } from "react-router-dom";
 import { PostContext } from "../../store/PostContext";
 import { AuthContext } from "../../store/FirebaseContext";
 import { useTranslation } from "react-i18next";
-import {SearchProductListContext} from '../../store/SearchProductListContext'
+import { SearchProductListContext } from "../../store/SearchProductListContext";
 function Posts() {
   const [myProducts, setMyProducts] = useState([]);
   const { user } = useContext(AuthContext);
-  const {searchProductList}=useContext(SearchProductListContext)
+  const { searchProductList } = useContext(SearchProductListContext);
   const { t } = useTranslation();
   const { setPostDetails } = useContext(PostContext);
   const [likedPosts, setLikedPosts] = useState({});
   const navigate = useNavigate();
- console.log('sea',searchProductList)
+  //  console.log('sea',searchProductList)
   useEffect(() => {
     const fetchMyProducts = async () => {
       try {
@@ -37,7 +44,6 @@ function Posts() {
     }
   }, [user]);
 
-
   const productHandler = (e, product) => {
     e.preventDefault();
     setPostDetails(product);
@@ -45,10 +51,12 @@ function Posts() {
   };
   const modifyFavourite = async (id) => {
     
+    if (id && !user) {
+      // console.log("no user");
+      navigate("/login");
+    }
+
     try {
-      if(id&&!user){
-        navigate('/login')
-      }
       // console.log("Modifying")
       const usersCollection = collection(db, "Users");
 
@@ -61,7 +69,7 @@ function Posts() {
 
         const userData = docs.data();
 
-        const updatedFavourite = userData.favourite
+        const updatedFavourite = userData.favourite;
         //  console.log(updatedFavourite)
         if (updatedFavourite[id]) {
           delete updatedFavourite[id];
@@ -69,64 +77,28 @@ function Posts() {
           updatedFavourite[id] = true;
         }
         // console.log(updatedFavourite)
-        setLikedPosts(updatedFavourite)
+        setLikedPosts(updatedFavourite);
         // console.log(userData)
-        await updateDoc(userDocRef, { favourite: updatedFavourite })
+        await updateDoc(userDocRef, { favourite: updatedFavourite });
         // console.log(likedPosts)
         // console.log(updatedFavourite)
       });
-
     } catch (erorr) {
       console.error(erorr);
     }
-  }
+  };
   const handleFavourite = (e, id) => {
+    // console.log(id)
     e.stopPropagation();
-   
-    modifyFavourite(id)
 
+    modifyFavourite(id);
   };
   useEffect(() => {
-    const modifyFavourite = async (id) => {
-    
-      try {
-        if(id&&!user){
-          navigate('/login')
-        }
-        // console.log("Modifying")
-        const usersCollection = collection(db, "Users");
-  
-        const q = query(usersCollection, where("id", "==", user.uid));
-  
-        const querySnapshot = await getDocs(q);
-  
-        querySnapshot.forEach(async (docs) => {
-          const userDocRef = doc(db, "Users", docs.id);
-  
-          const userData = docs.data();
-  
-          const updatedFavourite = userData.favourite
-          //  console.log(updatedFavourite)
-          if (updatedFavourite[id]) {
-            delete updatedFavourite[id];
-          } else {
-            updatedFavourite[id] = true;
-          }
-          // console.log(updatedFavourite)
-          setLikedPosts(updatedFavourite)
-          // console.log(userData)
-          await updateDoc(userDocRef, { favourite: updatedFavourite })
-          // console.log(likedPosts)
-          // console.log(updatedFavourite)
-        });
-  
-      } catch (erorr) {
-        console.error(erorr);
-      }
-    }
-    modifyFavourite()
-  }, [user])
-
+    modifyFavourite();
+  }, [user]);
+  // console.log((likedPosts))
+  // console.log((myProducts))
+  // console.log(searchProductList)
 
   return (
     <div className="postContainer">
