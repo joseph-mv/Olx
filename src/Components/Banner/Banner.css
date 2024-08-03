@@ -86,7 +86,7 @@
   
   display: none;
   position: absolute;
-  
+  margin-left:calc(30vw - 350px) ;
   width: 1275px;
   background-color: white;
   padding: 5px;
@@ -171,6 +171,10 @@ li span{
   
     justify-content: flex-start;
     /* overflow: hidden; */
+  }
+  .subMenu{
+    margin-left: 15px;
+    /* margin-right:20px; */
   }
 
  
